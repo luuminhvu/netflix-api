@@ -2,17 +2,18 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/UserRoutes");
+const dotenv = require("dotenv");
+const path = require("path");
+
+dotenv.config({ path: path.join(path.resolve(), ".env") });
 const app = express();
 app.use(cors());
 app.use(express.json());
 mongoose
-  .connect(
-    "mongodb+srv://luuvu:luuvu123@cluster0.f2bxuxz.mongodb.net/netflix",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("MongoDB connected");
   })
